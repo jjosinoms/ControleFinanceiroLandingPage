@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global CSS Variables */
+:root {
+  --primary-color: #f8f9fa;
+  --secondary-color: #ffffff;
+  --accent-color: #ff6347;
+  --text-color: #2c3e50;
+  --text-muted: #6c757d;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --gradient-primary: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  --gradient-accent: linear-gradient(135deg, #ff6347 0%, #ffa500 100%);
+  --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-accent: 0 8px 25px rgba(255, 99, 71, 0.3);
+  --background-light: #ffffff;
+  --background-section: #f8f9fa;
+}
+
+/* Global Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--accent-color);
+  color: white;
+}

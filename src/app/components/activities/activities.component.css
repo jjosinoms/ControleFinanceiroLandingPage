@@ -1,0 +1,643 @@
+/* Activities Section - Clean Design */
+.activities-section {
+    position: relative;
+    padding: 100px 0;
+    background: var(--background-section);
+    overflow: hidden;
+}
+
+.activities-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 99, 71, 0.02) 0%,
+        transparent 50%,
+        rgba(255, 165, 0, 0.02) 100%
+    );
+    pointer-events: none;
+}
+
+.activities-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Activities Header */
+.activities-header {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.activities-header h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.activities-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+    box-shadow: var(--shadow-accent);
+}
+
+.activities-header p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Activities Grid */
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+/* Activity Card */
+.activity-card {
+    position: relative;
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 40px 30px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: var(--shadow-primary);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 99, 71, 0.05), 
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.activity-card:hover::before {
+    left: 100%;
+}
+
+.activity-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(255, 99, 71, 0.1);
+    border-color: var(--accent-color);
+}
+
+/* Removed complex animations for clean design */
+
+/* Activity Header */
+.activity-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.activity-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-accent);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    margin-right: 20px;
+    box-shadow: var(--shadow-accent);
+    transition: all 0.4s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.activity-card:hover .activity-icon {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 99, 71, 0.4);
+}
+
+.activity-title {
+    flex: 1;
+}
+
+.activity-title h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.activity-card:hover .activity-title h3 {
+    color: var(--accent-color) !important;
+}
+
+/* Activity Description */
+.activity-description {
+    margin-bottom: 25px;
+    flex: 1;
+}
+
+.activity-description p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.activity-card:hover .activity-description p {
+    color: var(--text-color) !important;
+}
+
+/* Activity Features */
+.activity-features {
+    margin-bottom: 30px;
+    flex: 1;
+}
+
+.activity-features h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.activity-features h4::before {
+    content: '⚡';
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-list li {
+    position: relative;
+    padding: 6px 0 6px 24px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    transform: translateX(0);
+}
+
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.activity-card:hover .features-list li {
+    color: var(--text-color) !important;
+    transform: translateX(3px) !important;
+}
+
+.activity-card:hover .features-list li::before {
+    color: var(--accent-color) !important;
+}
+
+/* Activity CTA */
+.activity-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gradient-accent);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.4s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-accent);
+    margin-top: auto;
+}
+
+.activity-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.activity-cta:hover::before {
+    left: 100%;
+}
+
+.activity-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 99, 71, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.activity-cta i {
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.activity-cta:hover i {
+    transform: translateX(3px);
+}
+
+/* Activities CTA Section */
+.activities-cta {
+    text-align: center;
+    padding: 50px 40px;
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-primary);
+    margin-top: 40px;
+}
+
+.activities-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 99, 71, 0.03) 0%,
+        transparent 50%,
+        rgba(255, 165, 0, 0.03) 100%
+    );
+    pointer-events: none;
+}
+
+.activities-cta h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.activities-cta p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.activities-cta .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gradient-accent);
+    color: white;
+    padding: 16px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    box-shadow: var(--shadow-accent);
+}
+
+.activities-cta .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.activities-cta .btn-primary:hover::before {
+    left: 100%;
+}
+
+.activities-cta .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(255, 99, 71, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.activities-cta .btn-primary i {
+    transition: transform 0.3s ease;
+}
+
+.activities-cta .btn-primary:hover i {
+    transform: translateX(5px);
+}
+
+/* Loading States - Simplified */
+.activities-section.loading .activity-card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.activities-section.loading .activities-cta {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.activities-section.loaded .activity-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
+}
+
+.activities-section.loaded .activities-cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease-out 0.3s;
+}
+
+/* Staggered Animation Delays - Simplified */
+.activity-card:nth-child(1) { transition-delay: 0.1s; }
+.activity-card:nth-child(2) { transition-delay: 0.2s; }
+.activity-card:nth-child(3) { transition-delay: 0.3s; }
+.activity-card:nth-child(4) { transition-delay: 0.4s; }
+.activity-card:nth-child(5) { transition-delay: 0.5s; }
+.activity-card:nth-child(6) { transition-delay: 0.6s; }
+
+/* Removed floating animation for cleaner design */
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .activities-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+    
+    .activities-header h2 {
+        font-size: 2.5rem;
+    }
+    
+    .activities-cta {
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .activities-section {
+        padding: 80px 0;
+    }
+    
+    .activities-header {
+        margin-bottom: 60px;
+    }
+    
+    .activities-header h2 {
+        font-size: 2.2rem;
+    }
+    
+    .activities-header p {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+    
+    .activities-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .activity-card {
+        padding: 30px 25px;
+    }
+    
+    .activity-header {
+        margin-bottom: 20px;
+    }
+    
+    .activity-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+        margin-right: 15px;
+    }
+    
+    .activity-title h3 {
+        font-size: 1.4rem;
+    }
+    
+    .activities-cta {
+        padding: 40px 25px;
+        margin-top: 30px;
+    }
+    
+    .activities-cta h3 {
+        font-size: 1.8rem;
+    }
+    
+    .activities-cta .btn-primary {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .activities-section {
+        padding: 60px 0;
+    }
+    
+    .activities-header h2 {
+        font-size: 2rem;
+    }
+    
+    .activities-header p {
+        font-size: 1rem;
+    }
+    
+    .activity-card {
+        padding: 25px 20px;
+    }
+    
+    .activity-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.4rem;
+    }
+    
+    .activity-title h3 {
+        font-size: 1.3rem;
+    }
+    
+    .activity-description p {
+        font-size: 0.95rem;
+    }
+    
+    .features-list li {
+        font-size: 0.9rem;
+    }
+    
+    .activities-cta {
+        padding: 30px 20px;
+    }
+    
+    .activities-cta h3 {
+        font-size: 1.6rem;
+    }
+    
+    .activities-cta p {
+        font-size: 1rem;
+    }
+}
+
+/* Additional Animations from TypeScript */
+@keyframes activityRipple {
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes activityBounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    40%, 43% {
+        transform: translateY(-20px) scale(1.05);
+    }
+    70% {
+        transform: translateY(-10px) scale(1.02);
+    }
+    90% {
+        transform: translateY(-5px) scale(1.01);
+    }
+}
+
+@keyframes activitiesFloat {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* Pulse Animation for Icons */
+.activity-icon.pulse {
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(255, 99, 71, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(255, 99, 71, 0.5);
+    }
+}
+
+/* Activity Particles */
+.activity-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+    .activity-card,
+    .activity-icon,
+    .activity-cta,
+    .activities-cta .btn-primary {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .activity-card:hover {
+        transform: none !important;
+    }
+    
+    .activity-card.floating {
+        animation: none !important;
+    }
+    
+    .activities-cta::before {
+        animation: none !important;
+    }
+    
+    .activity-icon.pulse {
+        animation: none !important;
+    }
+}

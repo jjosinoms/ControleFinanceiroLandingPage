@@ -1,0 +1,238 @@
+<!-- Projects Section -->
+<section class="projects-section py-5" id="projetos">
+  <div class="container">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-5">
+      <h2 class="section-title display-4 fw-bold mb-3">
+        <span class="text-gradient">Nossos Projetos</span>
+      </h2>
+      <p class="section-subtitle lead text-muted">
+        Conheça alguns dos nossos trabalhos mais recentes e impressionantes
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading && projects.length === 0" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+      <p class="mt-3 text-muted">Carregando projetos...</p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid row g-4" *ngIf="!isLoading || projects.length > 0">
+      <div class="col-lg-4 col-md-6" *ngFor="let project of projects; trackBy: trackProject">
+        <div class="project-card" (click)="openProjectModal(project)">
+          
+          <!-- Project Image -->
+          <div class="project-image-container">
+            <img 
+              [src]="project.image_url" 
+              [alt]="project.title"
+              class="project-image"
+            />
+            <div class="project-overlay">
+              <div class="overlay-content">
+                <h5 class="project-title">{{ project.title }}</h5>
+                <p class="project-short-desc">{{ project.short_description }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Project Info -->
+          <div class="project-info">
+            <h6 class="project-name">{{ project.title }}</h6>
+            <p class="project-desc">{{ project.short_description }}</p>
+            
+            <!-- Comments Counter -->
+            <div class="comments-counter">
+              <i class="fas fa-comment"></i>
+              <span>{{ project.comments_count }} comentários</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Project Modal (Fullscreen) -->
+<div class="project-modal" *ngIf="isModalOpen" (click)="onModalBackdropClick($event)">
+  <div class="modal-content" *ngIf="selectedProject">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2 class="modal-title">{{ selectedProject.title }}</h2>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body">
+      
+      <!-- Featured Image -->
+      <div class="featured-image">
+        <img [src]="selectedProject.image_url" [alt]="selectedProject.title" />
+      </div>
+      
+      <!-- Project Gallery -->
+      <div class="project-gallery" *ngIf="selectedProject.gallery_images.length > 0">
+        <h4>Galeria do Projeto</h4>
+        <div class="gallery-grid">
+          <div 
+            class="gallery-thumbnail" 
+            *ngFor="let image of selectedProject.gallery_images; let i = index"
+            (click)="openGallery(i)"
+          >
+            <img [src]="image" [alt]="selectedProject.title + ' - Imagem ' + (i + 1)" />
+            <div class="thumbnail-overlay">
+              <i class="fas fa-search-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project Description -->
+      <div class="project-description">
+        <h3>Descrição do Projeto</h3>
+        <p>{{ selectedProject.description }}</p>
+      </div>
+      
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h3>Comentários ({{ projectComments.length }})</h3>
+        
+        <!-- Comments List -->
+        <div class="comments-list" *ngIf="projectComments.length > 0">
+          <div class="comment-item" *ngFor="let comment of projectComments">
+            <div class="comment-header">
+              <strong class="comment-author">{{ comment.author_name }}</strong>
+              <small class="comment-date">{{ formatDate(comment.created_at) }}</small>
+            </div>
+            <p class="comment-message">{{ comment.message }}</p>
+          </div>
+        </div>
+        
+        <!-- No Comments Message -->
+        <div class="no-comments" *ngIf="projectComments.length === 0">
+          <p class="text-muted">Seja o primeiro a comentar sobre este projeto!</p>
+        </div>
+        
+        <!-- Add Comment Form -->
+        <div class="add-comment-form">
+          <h4>Deixe seu comentário</h4>
+          <form (ngSubmit)="submitComment()" #commentForm="ngForm">
+            
+            <div class="form-group mb-3">
+              <label for="authorName" class="form-label">Nome</label>
+              <input 
+                type="text" 
+                id="authorName"
+                class="form-control" 
+                [(ngModel)]="newComment.author_name"
+                name="authorName"
+                placeholder="Seu nome"
+                required
+              />
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="commentMessage" class="form-label">Mensagem</label>
+              <textarea 
+                id="commentMessage"
+                class="form-control" 
+                rows="4"
+                [(ngModel)]="newComment.message"
+                name="commentMessage"
+                placeholder="Escreva seu comentário..."
+                required
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="isLoading || !newComment.author_name.trim() || !newComment.message.trim()"
+            >
+              <span *ngIf="!isLoading">
+                <i class="fas fa-paper-plane me-2"></i>
+                Enviar Comentário
+              </span>
+              <span *ngIf="isLoading">
+                <i class="fas fa-spinner fa-spin me-2"></i>
+                Enviando...
+              </span>
+            </button>
+            
+          </form>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+
+<!-- Gallery Lightbox -->
+<div class="gallery-lightbox" *ngIf="isGalleryOpen && selectedProject" (click)="onGalleryBackdropClick($event)">
+  <div class="gallery-container">
+    
+    <!-- Gallery Header -->
+    <div class="gallery-header">
+      <h3>{{ selectedProject.title }}</h3>
+      <button class="gallery-close" (click)="closeGallery()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- Main Image -->
+    <div class="gallery-main">
+      <button 
+        class="gallery-nav gallery-prev" 
+        (click)="prevImage()"
+        [disabled]="currentGalleryIndex === 0"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <div class="gallery-image-container">
+        <img 
+          [src]="selectedProject.gallery_images[currentGalleryIndex]" 
+          [alt]="selectedProject.title + ' - Imagem ' + (currentGalleryIndex + 1)"
+          class="gallery-main-image"
+        />
+      </div>
+      
+      <button 
+        class="gallery-nav gallery-next" 
+        (click)="nextImage()"
+        [disabled]="currentGalleryIndex === selectedProject.gallery_images.length - 1"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <!-- Gallery Thumbnails -->
+    <div class="gallery-thumbnails">
+      <div 
+        class="thumbnail-item" 
+        *ngFor="let image of selectedProject.gallery_images; let i = index"
+        [class.active]="i === currentGalleryIndex"
+        (click)="goToImage(i)"
+      >
+        <img [src]="image" [alt]="selectedProject.title + ' - Thumbnail ' + (i + 1)" />
+      </div>
+    </div>
+    
+    <!-- Gallery Counter -->
+    <div class="gallery-counter">
+      {{ currentGalleryIndex + 1 }} / {{ selectedProject.gallery_images.length }}
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,278 @@
+<!-- Contact Section -->
+<section #contactSection id="contato" class="contact-section py-5" [class.loading]="!isFormValid">
+  <div class="container">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-5">
+      <h2 class="section-title display-4 fw-bold mb-3">Entre em Contato</h2>
+      <p class="section-subtitle lead text-muted">
+        Solicite seu orçamento gratuito e sem compromisso. Nossa equipe está pronta para transformar seu projeto em realidade!
+      </p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-5">
+      
+      <!-- Contact Form -->
+      <div class="col-lg-7">
+        <div class="contact-form-wrapper">
+          <h3 class="form-title mb-4">
+            <i class="fas fa-edit me-2"></i>
+            Solicite Seu Orçamento
+          </h3>
+
+          <!-- Form Messages -->
+          <div *ngIf="formMessage" class="form-message mb-4" [ngClass]="'alert-' + messageType">
+            <i class="fas" [ngClass]="messageType === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'"></i>
+            {{ formMessage }}
+          </div>
+
+          <form #contactForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="row g-3">
+              
+              <!-- Nome -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name" class="form-label">Nome Completo</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control"
+                    [(ngModel)]="formData.name"
+                    (input)="onFieldInput('name')"
+                    (focus)="onFieldFocus('name')"
+                    (blur)="onFieldBlur('name')"
+                    [class.valid]="isFieldValid('name')"
+                    [class.invalid]="isFieldInvalid('name')"
+                    placeholder="Seu nome completo"
+                    required
+                  />
+                  <div *ngIf="getFieldError('name')" class="validation-message error">
+                    {{ getFieldError('name') }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    [(ngModel)]="formData.email"
+                    (input)="onFieldInput('email')"
+                    (focus)="onFieldFocus('email')"
+                    (blur)="onFieldBlur('email')"
+                    [class.valid]="isFieldValid('email')"
+                    [class.invalid]="isFieldInvalid('email')"
+                    placeholder="seu@email.com"
+                    required
+                  />
+                  <div *ngIf="getFieldError('email')" class="validation-message error">
+                    {{ getFieldError('email') }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Telefone -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="phone" class="form-label">WhatsApp/Telefone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    class="form-control"
+                    [(ngModel)]="formData.phone"
+                    (input)="onFieldInput('phone')"
+                    (focus)="onFieldFocus('phone')"
+                    (blur)="onFieldBlur('phone')"
+                    [class.valid]="isFieldValid('phone')"
+                    [class.invalid]="isFieldInvalid('phone')"
+                    placeholder="(21) 99999-9999"
+                  />
+                  <div *ngIf="getFieldError('phone')" class="validation-message error">
+                    {{ getFieldError('phone') }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Assunto -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="subject" class="form-label">Serviço Desejado</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    class="form-control"
+                    [(ngModel)]="formData.subject"
+                    (input)="onFieldInput('subject')"
+                    (focus)="onFieldFocus('subject')"
+                    (blur)="onFieldBlur('subject')"
+                    [class.valid]="isFieldValid('subject')"
+                    [class.invalid]="isFieldInvalid('subject')"
+                    placeholder="Ex: Vidraçaria, Hidráulica, etc."
+                    required
+                  />
+                  <div *ngIf="getFieldError('subject')" class="validation-message error">
+                    {{ getFieldError('subject') }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mensagem -->
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="message" class="form-label">Descreva Seu Projeto</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    class="form-control"
+                    rows="5"
+                    [(ngModel)]="formData.message"
+                    (input)="onFieldInput('message')"
+                    (focus)="onFieldFocus('message')"
+                    (blur)="onFieldBlur('message')"
+                    [class.valid]="isFieldValid('message')"
+                    [class.invalid]="isFieldInvalid('message')"
+                    placeholder="Conte-nos detalhes sobre o serviço que você precisa: localização, urgência, tamanho do projeto, etc."
+                    required
+                  ></textarea>
+                  <div *ngIf="getFieldError('message')" class="validation-message error">
+                    {{ getFieldError('message') }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="col-12">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary submit-btn"
+                  [class.ready]="isFormValid"
+                  [disabled]="isLoading"
+                >
+                  <span *ngIf="!isLoading">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Enviar Solicitação Gratuita
+                  </span>
+                  <span *ngIf="isLoading">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    Enviando...
+                  </span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="form-progress-container">
+              <div class="form-progress" [style.width.%]="formProgress"></div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-lg-5">
+        <div class="contact-info-wrapper">
+          <h3 class="info-title mb-4">
+            <i class="fas fa-phone me-2"></i>
+            Fale Conosco
+          </h3>
+
+          <!-- Address -->
+          <div class="contact-info-item" (click)="copyToClipboard('Rua Tobias Moscoso, 257, Rio de Janeiro - RJ, CEP: 20530-540', $event)">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Nosso Endereço</h4>
+              <p>
+                Rua Tobias Moscoso, 257<br>
+                Rio de Janeiro - RJ<br>
+                CEP: 20530-540
+              </p>
+            </div>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="contact-info-item" (click)="openWhatsAppChat('5521992215224')">
+            <div class="contact-icon whatsapp">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="contact-details">
+              <h4>WhatsApp</h4>
+              <p>(21) 99221-5224</p>
+              <span class="contact-action">Clique para chamar</span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="contact-info-item" (click)="copyToClipboard('contatosjrmferreira@gmail.com', $event)">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h4>E-mail</h4>
+              <p>
+                <a href="mailto:contatosjrmferreira@gmail.com">contatosjrmferreira&#64;gmail.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="contact-info-item">
+            <div class="contact-icon instagram">
+              <i class="fab fa-instagram"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Instagram</h4>
+              <p>
+                <a href="https://www.instagram.com/jrmferreira?igsh=MXd4eTQ2cGR5dGIzcw==" target="_blank">&#64;jrmferreira</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Horário -->
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Horário de Atendimento</h4>
+              <p>
+                <strong>Segunda a Sexta:</strong> 08h às 20h<br>
+                <strong>Sábado:</strong> 09h às 14h
+              </p>
+            </div>
+          </div>
+
+          <!-- Emergency Alert -->
+          <div class="contact-emergency">
+            <div class="emergency-header">
+              <i class="fas fa-exclamation-triangle"></i>
+              <h4>Atendimento 24h para Emergências!</h4>
+            </div>
+            <p>Vazamentos, problemas elétricos graves e emergências de gás.</p>
+            <button 
+              class="btn btn-emergency" 
+              (click)="openWhatsAppChat('5521992215224', '🚨 EMERGÊNCIA! Preciso de atendimento urgente.')"
+            >
+              <i class="fas fa-ambulance me-2"></i>
+              Emergência WhatsApp
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
